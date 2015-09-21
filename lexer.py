@@ -24,7 +24,7 @@ def lexscript(script):
     lex.add_token_expr(r'^,', SEP)
     lex.add_token_expr(r'^:', SEP)
     lex.add_token_expr(r'^(\+|-)?[0-9]+(\.[0-9]*)?', NUM)
-    lex.add_token_expr(r'^".*"', STRING, (1, -1, 0))
+    lex.add_token_expr(r'^"[^\"]*"', (1, -1, 0))  # [TO FIX] lexer does not support backslash escaping of quotes. \q?
     lex.add_token_expr(r'^[a-zA-Z_][a-zA-Z0-9_]*', NAME)
     lex.add_token_expr(r'^[^\s]', OP)
 

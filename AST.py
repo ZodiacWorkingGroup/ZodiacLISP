@@ -37,5 +37,9 @@ class SExpr(Equality):
 
         if com in env['builtin-functions']:
             return env['builtin-functions'][com](*args)
-        elif com in env['functions']:
-            pass
+        elif com in env['variables']:
+            funcenv = {}
+            for x in range(len(env['variables'][com]['args'])):
+                funcenv[env['variables'][com]['args'][x]] = args[x]
+
+            return 
