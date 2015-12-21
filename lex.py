@@ -1,12 +1,13 @@
 import ply.lex as lex
 
 tokens = [
+    'FUNC',
     'INT',
     'FLOAT',
     'STR',
-    'FUNC',
     'OPAREN',
-    'CPAREN'
+    'CPAREN',
+    'BOOL'
 ]
 
 
@@ -42,8 +43,17 @@ def t_FLOAT(t):
     t.value = float(t.value)
     return t
 
-t_STR = r'"[^"\\]*(?:\\.[^"\\]*)*"'
-t_FUNC = r'.*'
+
+def t_STR(t):
+    '''"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"'''
+    return t[1:-1]
+
+
+def t_BOOL(t):
+    """[tT](rue|RUE)?|[fF](alse|ALSE)?"""
+    return t[0].upper() == 'T'
+
+t_FUNC = r'[^()0-9\s"]+'
 t_OPAREN = r'\('
 t_CPAREN = r'\)'
 
@@ -54,3 +64,8 @@ def t_error(t):
     raise SyntaxError('Invalid character: '+t.value)
 
 lexer = lex.lex()
+
+if __name__ == '__main__':
+    lexer.input(input())
+    for x in lexer:
+        print(x)
